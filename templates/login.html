@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Management - Login</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: linear-gradient(
+                135deg,
+                #2563eb,
+                #7c3aed
+            );
+
+            transition: 0.3s;
+        }
+
+        /* LOGIN CARD */
+
+        .login-card {
+            width: 420px;
+
+            background: white;
+
+            padding: 40px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .logo {
+            text-align: center;
+
+            font-size: 45px;
+
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            text-align: center;
+
+            margin: 0;
+
+            color: #1f2937;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #6b7280;
+
+            margin-top: 8px;
+
+            margin-bottom: 30px;
+        }
+
+        /* INPUT */
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: bold;
+
+            color: #374151;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37,99,235,0.12);
+        }
+
+        /* LOGIN BUTTON */
+
+        .login-btn {
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .login-btn:hover {
+            background: #1d4ed8;
+
+            transform: translateY(-1px);
+        }
+
+        /* RESET BUTTON */
+
+        .reset-btn {
+            width: 100%;
+
+            padding: 12px;
+
+            margin-top: 10px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 8px;
+
+            background: white;
+
+            color: #374151;
+
+            font-size: 15px;
+
+            cursor: pointer;
+        }
+
+        .reset-btn:hover {
+            background: #f3f4f6;
+        }
+
+        /* REGISTER */
+
+        .register {
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #6b7280;
+        }
+
+        .register a {
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .register a:hover {
+            text-decoration: underline;
+        }
+
+        /* FLASH MESSAGE */
+
+        .alert {
+            padding: 12px;
+
+            margin-bottom: 20px;
+
+            border-radius: 8px;
+
+            text-align: center;
+        }
+
+        .danger {
+            background: #fee2e2;
+
+            color: #991b1b;
+        }
+
+        .success {
+            background: #dcfce7;
+
+            color: #166534;
+        }
+
+        /* DARK MODE BUTTON */
+
+        .theme-btn {
+            position: fixed;
+
+            top: 20px;
+
+            right: 20px;
+
+            width: 45px;
+
+            height: 45px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background: white;
+
+            cursor: pointer;
+
+            font-size: 20px;
+
+            box-shadow:
+                0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* DARK MODE */
+
+        body.dark-mode {
+            background: linear-gradient(
+                135deg,
+                #111827,
+                #312e81
+            );
+        }
+
+        body.dark-mode .login-card {
+            background: #1f2937;
+        }
+
+        body.dark-mode h1 {
+            color: white;
+        }
+
+        body.dark-mode .subtitle {
+            color: #d1d5db;
+        }
+
+        body.dark-mode label {
+            color: #f3f4f6;
+        }
+
+        body.dark-mode input {
+            background: #374151;
+
+            color: white;
+
+            border-color: #4b5563;
+        }
+
+        body.dark-mode input::placeholder {
+            color: #9ca3af;
+        }
+
+        body.dark-mode .reset-btn {
+            background: #374151;
+
+            color: white;
+
+            border-color: #4b5563;
+        }
+
+        body.dark-mode .register {
+            color: #d1d5db;
+        }
+
+        body.dark-mode .theme-btn {
+            background: #ccced2;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- DARK MODE -->
+
+<button
+    class="theme-btn"
+    onclick="toggleTheme()"
+    id="themeButton">
+
+    🌙
+
+</button>
+
+
+<!-- LOGIN CARD -->
+
+<div class="login-card">
+
+    <div class="logo">
+        👨‍💼
+    </div>
+
+    <h1>
+        Welcome Back
+    </h1>
+
+    <p class="subtitle">
+        Employee Management System
+    </p>
+
+
+    <!-- FLASH MESSAGES -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% for category, message in messages %}
+
+            <div class="alert {{ category }}">
+
+                {{ message }}
+
+            </div>
+
+        {% endfor %}
+
+    {% endwith %}
+
+
+    <!-- LOGIN FORM -->
+
+    <form method="POST">
+
+        <div class="form-group">
+
+            <label>
+                Username
+            </label>
+
+            <input
+                type="text"
+                name="username"
+                placeholder="Enter your username"
+                required>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Password
+            </label>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Enter your password"
+                required>
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="login-btn">
+
+            🔐 Login
+
+        </button>
+
+
+        <button
+            type="reset"
+            class="reset-btn">
+
+            Reset
+
+        </button>
+
+    </form>
+
+
+    <div class="register">
+
+        Don't have an account?
+
+        <a href="{{ url_for('register') }}">
+            Create Account
+        </a>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function toggleTheme() {
+
+    document.body.classList.toggle("dark-mode");
+
+    const button =
+        document.getElementById("themeButton");
+
+    if (
+        document.body.classList.contains("dark-mode")
+    ) {
+
+        button.innerHTML = "☀️ Dark";
+
+        localStorage.setItem(
+            "theme",
+            "dark"
+        );
+
+    } else {
+
+        button.innerHTML = "🌙 Light";
+
+        localStorage.setItem(
+            "theme",
+            "light"
+        );
+
+    }
+}
+
+
+/* LOAD SAVED THEME */
+
+window.onload = function() {
+
+    const theme =
+        localStorage.getItem("theme");
+
+    if (theme === "dark") {
+
+        document.body.classList.add(
+            "dark-mode"
+        );
+
+        document.getElementById(
+            "themeButton"
+        ).innerHTML = "☀️ Dark";
+
+    }
+
+};
+
+</script>
+
+
+</body>
+
+</html>

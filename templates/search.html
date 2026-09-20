@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Search Employees</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+            transition: 0.3s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        .search-btn {
+            padding: 14px 25px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .search-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .table-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #2563eb;
+            color: white;
+            padding: 14px;
+            text-align: left;
+        }
+
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .edit-btn {
+            background: #f59e0b;
+            color: white;
+            padding: 7px 11px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 30px;
+        }
+
+        /* DARK MODE */
+
+        body.dark-mode {
+            background: #111827;
+            color: white;
+        }
+
+        body.dark-mode .search-form input {
+            background: #374151;
+            color: white;
+            border-color: #4b5563;
+        }
+
+        body.dark-mode .table-container {
+            background: #1f2937;
+        }
+
+        body.dark-mode td {
+            border-color: #374151;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+{% include "navbar.html" %}
+
+
+<div class="container">
+
+    <h1>
+        🔍 Search Employees
+    </h1>
+
+
+    <form
+        method="GET"
+        action="{{ url_for('search') }}"
+        class="search-form">
+
+        <input
+            type="text"
+            name="query"
+            value="{{ query }}"
+            placeholder="Search by name, email, department or position">
+
+
+        <button
+            type="submit"
+            class="search-btn">
+
+            Search
+
+        </button>
+
+    </form>
+
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Position</th>
+                    <th>Salary</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for employee in employees %}
+
+                <tr>
+
+                    <td>
+                        {{ employee.id }}
+                    </td>
+
+                    <td>
+                        {{ employee.name }}
+                    </td>
+
+                    <td>
+                        {{ employee.email }}
+                    </td>
+
+                    <td>
+                        {{ employee.department }}
+                    </td>
+
+                    <td>
+                        {{ employee.position }}
+                    </td>
+
+                    <td>
+                        ₹{{ employee.salary }}
+                    </td>
+
+                    <td>
+
+                        <a
+                            href="{{ url_for('edit_employee', id=employee.id) }}"
+                            class="edit-btn">
+
+                            Edit
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% else %}
+
+                <tr>
+
+                    <td
+                        colspan="7"
+                        class="no-data">
+
+                        No employees found.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

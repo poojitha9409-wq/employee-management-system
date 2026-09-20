@@ -1,0 +1,95 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Logged Out</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(
+                135deg,
+                #2563eb,
+                #7c3aed
+            );
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logout-card {
+            width: 400px;
+            background: white;
+            padding: 45px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.2);
+        }
+
+        .logout-card h1 {
+            margin-bottom: 10px;
+        }
+
+        .logout-card p {
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        .login-btn {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+
+        .login-btn:hover {
+            background: #1d4ed8;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="logout-card">
+
+    <h1>
+        👋 Logged Out
+    </h1>
+
+    <p>
+        You have been successfully logged out.
+    </p>
+
+    <a
+        href="{{ url_for('login') }}"
+        class="login-btn">
+
+        Login Again
+
+    </a>
+
+</div>
+
+
+</body>
+
+</html>
