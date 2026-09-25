@@ -37,15 +37,17 @@ def create_tables():
 
     # EMPLOYEES TABLE
     conn.execute("""
-        CREATE TABLE IF NOT EXISTS employees (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            email TEXT NOT NULL,
-            phone TEXT,
-            department TEXT,
-            position TEXT,
-            salary REAL
-        )
+       CREATE TABLE IF NOT EXISTS employees (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone TEXT,
+    department TEXT,
+    position TEXT,
+    salary REAL,
+    joining_date TEXT,
+    address TEXT
+)
     """)
 
     # ADD JOINING DATE TO EXISTING DATABASE
@@ -496,13 +498,7 @@ def search():
 # ==================================================
 # START APPLICATION
 # ==================================================
+create_tables()
 
 if __name__ == "__main__":
-
-    create_tables()
-
-    app.run(
-        debug=True,
-        host="127.0.0.1",
-        port=5000
-    )
+    app.run(debug=True, host="0.0.0.0", port=5000)
